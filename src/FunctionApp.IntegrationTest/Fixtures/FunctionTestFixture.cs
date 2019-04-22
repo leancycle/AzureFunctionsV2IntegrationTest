@@ -10,22 +10,20 @@ namespace FunctionApp.IntegrationTest.Fixtures
     {
         private readonly Process _funcHostProcess;
 
-        public int Port { get; } = 7001;
+        public int Port { get; } = 7071;
 
         public readonly HttpClient Client = new HttpClient();
 
         public FunctionTestFixture()
         {
-            var dotnetExePath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.DotnetExecutablePath);
-            var functionHostPath = Environment.ExpandEnvironmentVariables(ConfigurationHelper.Settings.FunctionHostPath);
             var functionAppFolder = Path.GetRelativePath(Directory.GetCurrentDirectory(), ConfigurationHelper.Settings.FunctionApplicationPath);
 
             _funcHostProcess = new Process
             {
                 StartInfo =
                 {
-                    FileName = dotnetExePath,
-                    Arguments = $"\"{functionHostPath}\" start -p {Port}",
+                    FileName = "func.exe",
+                    Arguments = $"host start -p {Port}",
                     WorkingDirectory = functionAppFolder
                 }
             };
